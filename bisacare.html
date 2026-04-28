@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BISAcare | Satu Klik untuk Jaminan Kesehatanmu</title>
+    <meta name="description"
+        content="BISAcare: AI-powered health insurance assistant for Indonesia. OCR, voice AI, and automated claims processing.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B1F4B;
+            --navy-dark: #071431;
+            --cyan: #00B4D8;
+            --cyan-light: #48CAE4;
+            --white: #FFFFFF;
+            --accent-blue: #E8F4FD;
+            --text-main: #1A202C;
+            --text-muted: #4A5568;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        section {
+            padding: 100px 5%;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Animated Mesh Background --- */
+        .mesh-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--navy);
+        }
+
+        .mesh-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: move 20s infinite alternate ease-in-out;
+        }
+
+        .c1 {
+            width: 600px;
+            height: 600px;
+            background: var(--navy);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .c2 {
+            width: 500px;
+            height: 500px;
+            background: var(--cyan);
+            top: 20%;
+            right: -5%;
+            animation-delay: -5s;
+        }
+
+        .c3 {
+            width: 400px;
+            height: 400px;
+            background: #0077B6;
+            bottom: -5%;
+            left: 10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(100px, 50px) scale(1.1);
+            }
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 15px 5%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--navy);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--cyan);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+
+        .btn-cta {
+            background: var(--cyan);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-cta:hover {
+            background: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            padding-top: 120px;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(40px, 5vw, 64px);
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--cyan-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--navy);
+        }
+
+        /* Phone Mockup */
+        .phone-mockup {
+            position: relative;
+            width: 300px;
+            height: 600px;
+            background: #111;
+            border-radius: 40px;
+            border: 8px solid #333;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+        }
+
+        .phone-screen {
+            background: var(--accent-blue);
+            height: 100%;
+            padding: 20px;
+            color: var(--navy);
+        }
+
+        .phone-header {
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .status-badge {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .phone-ai-bubble {
+            background: var(--cyan);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+            font-size: 12px;
+            margin-top: 50px;
+            animation: float 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* --- Problem Stats --- */
+        .stats {
+            background: var(--navy-dark);
+            color: white;
+            text-align: center;
+        }
+
+        .stats h2 {
+            margin-bottom: 60px;
+            font-size: 36px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--cyan);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        /* --- Features --- */
+        .features {
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            padding: 40px;
+            border-radius: 24px;
+            background: var(--accent-blue);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15);
+            background: white;
+            outline: 2px solid var(--cyan);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--navy);
+        }
+
+        /* --- How It Works --- */
+        .how-it-works {
+            background: var(--accent-blue);
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: dashed var(--cyan);
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--cyan);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+            color: var(--navy);
+        }
+
+        /* --- Who It's For --- */
+        .who-for-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .who-col {
+            padding: 50px;
+            border-radius: 32px;
+            background: white;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+        }
+
+        .who-col h3 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--navy);
+        }
+
+        .who-list {
+            list-style: none;
+        }
+
+        .who-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+        }
+
+        .check-icon {
+            color: var(--cyan);
+            font-weight: 900;
+        }
+
+        /* --- Tech & Trust --- */
+        .tech-trust {
+            text-align: center;
+        }
+
+        .logo-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 60px;
+            margin: 50px 0;
+            opacity: 0.6;
+            filter: grayscale(1);
+            transition: all 0.5s;
+        }
+
+        .logo-strip:hover {
+            opacity: 1;
+            filter: grayscale(0);
+        }
+
+        .logo-strip img {
+            max-height: 45px;
+            max-width: 180px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .logo-strip span {
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--navy);
+        }
+
+        /* --- Financial Traction --- */
+        .traction {
+            background: var(--navy);
+            color: white;
+            text-align: center;
+        }
+
+        .traction-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 50px;
+        }
+
+        .traction-item h3 {
+            font-size: 56px;
+            color: var(--cyan);
+            margin-bottom: 10px;
+        }
+
+        /* --- Partners --- */
+        .partners {
+            padding: 60px 5%;
+            background: var(--white);
+            border-top: 1px solid #eee;
+        }
+
+        /* --- Final CTA --- */
+        .final-cta {
+            background: linear-gradient(135deg, var(--navy), #005f73);
+            color: white;
+            text-align: center;
+            padding: 120px 5%;
+        }
+
+        .final-cta h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .pulse-btn {
+            animation: pulse 2s infinite;
+            padding: 20px 50px;
+            font-size: 18px;
+            margin-top: 40px;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(0, 180, 216, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 180, 216, 0);
+            }
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 80px 5% 40px;
+            background: var(--white);
+            color: var(--navy);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo p {
+            margin-top: 20px;
+            max-width: 300px;
+            opacity: 0.7;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 25px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--cyan);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 992px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin: 0 auto 40px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .who-for-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-container {
+                flex-direction: column;
+                gap: 50px;
+            }
+
+            .steps-container::before {
+                display: none;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">❤+</div>
+            BISAcare
+        </a>
+        <ul class="nav-links">
+            <li><a href="#features">Fitur</a></li>
+            <li><a href="#how-it-works">Cara Kerja</a></li>
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#partners">Mitra</a></li>
+        </ul>
+        <a href="#" class="btn-cta">Coba Sekarang</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="mesh-bg">
+            <div class="mesh-circle c1"></div>
+            <div class="mesh-circle c2"></div>
+            <div class="mesh-circle c3"></div>
+        </div>
+        <div class="container hero-container">
+            <div class="hero-content reveal">
+                <h1>Klaim Asuransi Kesehatan Jadi Semudah Satu Klik</h1>
+                <p>BISAcare menggunakan AI untuk membantu kamu mendaftar, mengecek coverage, dan mengajukan klaim —
+                    tanpa antrean, tanpa kebingungan.</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn-cta">Download Aplikasi</a>
+                    <a href="#" class="btn-secondary">Lihat Demo</a>
+                </div>
+            </div>
+            <div class="hero-visual reveal" style="transition-delay: 0.2s;">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="phone-header">
+                            <span>BISAcare</span>
+                            <span>9:41</span>
+                        </div>
+                        <div class="app-card">
+                            <small>Hi, Andi!</small>
+                            <p style="font-weight: 800; margin: 5px 0;">Cek Coverage</p>
+                            <div
+                                style="background: #f0f4f8; height: 100px; border-radius: 10px; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: #999;">
+                                Scanning KTP...
+                            </div>
+                        </div>
+                        <div class="app-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Status Klaim</span>
+                                <span class="status-badge">Approved</span>
+                            </div>
+                            <div style="height: 4px; background: #eee; margin-top: 15px; border-radius: 2px;">
+                                <div style="width: 100%; height: 100%; background: var(--cyan); border-radius: 2px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="phone-ai-bubble">
+                            "Andi, polis asuransi kamu mencakup biaya rawat inap ini 100%!"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problem Stats -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <h2 class="reveal">Masalah Nyata yang Dihadapi Jutaan Orang Indonesia</h2>
+            <div class="stats-grid">
+                <div class="stat-card reveal">
+                    <span class="stat-number">29%</span>
+                    <p class="stat-label">Out-of-pocket health spending</p>
+                </div>
+                <div class="stat-card reveal" style="transition-delay: 0.1s;">
+                    <span class="stat-number">42.4%</span>
+                    <p class="stat-label">Masyarakat desa kesulitan akses RS</p>
+                </div>
+                <div class="stat-card reveal" style="transition-delay: 0.2s;">
+                    <span class="stat-number">50%</span>
+                    <p class="stat-label">Klaim asuransi menghadapi kendala</p>
+                </div>
+                <div class="stat-card reveal" style="transition-delay: 0.3s;">
+                    <span class="stat-number">81%</span>
+                    <p class="stat-label">Cakupan JKN namun akses masih timpang</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Apa yang BISAcare Lakukan?</h2>
+                <p>Teknologi tercanggih untuk pengalaman kesehatan yang lebih manusiawi.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">🆔</div>
+                    <h3>Smart Identity</h3>
+                    <p>OCR scan KTP & kartu BPJS untuk registrasi instan tanpa formulir fisik.</p>
+                </div>
+                <div class="feature-card reveal" style="transition-delay: 0.1s;">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Coverage Check</h3>
+                    <p>Cek status "Covered / Not Covered" secara real-time sebelum ke kasir.</p>
+                </div>
+                <div class="feature-card reveal" style="transition-delay: 0.2s;">
+                    <div class="feature-icon">🎙️</div>
+                    <h3>AI Claim Voice</h3>
+                    <p>Ajukan klaim cukup dengan bicara. AI kami akan mengisi dokumen untukmu.</p>
+                </div>
+                <div class="feature-card reveal" style="transition-delay: 0.3s;">
+                    <div class="feature-icon">📊</div>
+                    <h3>Transparent Track</h3>
+                    <p>Pantau status klaim detik demi detik dengan prediksi waktu selesai.</p>
+                </div>
+                <div class="feature-card reveal" style="transition-delay: 0.4s;">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community</h3>
+                    <p>Bagikan pengalamanmu dan bantu orang lain memilih layanan terbaik.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Cara Kerja BISAcare</h2>
+            </div>
+            <div class="steps-container">
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <h3>Scan KTP</h3>
+                    <p>Ambil foto KTP atau kartu BPJS kamu. AI akan otomatis mendaftarkan profilmu.</p>
+                </div>
+                <div class="step reveal" style="transition-delay: 0.1s;">
+                    <div class="step-number">2</div>
+                    <h3>Cek Coverage</h3>
+                    <p>Input keluhan atau diagnosis. AI mencocokkan langsung dengan polis asurasimu.</p>
+                </div>
+                <div class="step reveal" style="transition-delay: 0.2s;">
+                    <div class="step-number">3</div>
+                    <h3>Ajukan Klaim</h3>
+                    <p>Bicara dengan asisten AI untuk memproses klaim secara otomatis ke pihak asuransi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who It's For -->
+    <section class="who-for" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Untuk Siapa?</h2>
+            </div>
+            <div class="who-for-grid">
+                <div class="who-col reveal">
+                    <h3>Pasien</h3>
+                    <ul class="who-list">
+                        <li><span class="check-icon">✓</span> Ibu rumah tangga yang butuh kepastian biaya</li>
+                        <li><span class="check-icon">✓</span> Karyawan yang sibuk dan anti-ribet</li>
+                        <li><span class="check-icon">✓</span> Pekerja informal tanpa asuransi kantor</li>
+                        <li><span class="check-icon">✓</span> Lansia yang butuh bantuan navigasi klaim</li>
+                    </ul>
+                </div>
+                <div class="who-col reveal" style="transition-delay: 0.2s;">
+                    <h3>Rumah Sakit</h3>
+                    <ul class="who-list">
+                        <li><span class="check-icon">✓</span> Mengurangi beban administrasi manual</li>
+                        <li><span class="check-icon">✓</span> Verifikasi data pasien lebih cepat & akurat</li>
+                        <li><span class="check-icon">✓</span> Proses pembayaran klaim lebih lancar</li>
+                        <li><span class="check-icon">✓</span> Meningkatkan kepuasan layanan pasien</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech & Trust -->
+    <section class="tech-trust">
+        <div class="container">
+            <h2 class="reveal">Dibangun dengan Teknologi AI Terpercaya</h2>
+            <div class="logo-strip reveal">
+                <span>Gemini</span>
+                <span>Google Cloud</span>
+                <span>Hugging Face</span>
+                <span>FastAPI</span>
+                <span>Docker</span>
+                <span>React Native</span>
+                <span>PostgreSQL</span>
+            </div>
+            <p class="reveal">Arsitektur AI kami memastikan data kamu aman, klaim lebih cepat, dan proses transparan.
+            </p>
+        </div>
+    </section>
+
+    <!-- Financial Traction -->
+    <section class="traction">
+        <div class="container">
+            <div class="traction-grid">
+                <div class="traction-item reveal">
+                    <h3>Rp 7,4 M</h3>
+                    <p>Proyeksi Revenue Tahun 1</p>
+                </div>
+                <div class="traction-item reveal" style="transition-delay: 0.1s;">
+                    <h3>6.1×</h3>
+                    <p>Pertumbuhan di Tahun 6</p>
+                </div>
+                <div class="traction-item reveal" style="transition-delay: 0.2s;">
+                    <h3>100%</h3>
+                    <p>ROI di Tahun 2026</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners" id="partners">
+        <div class="container">
+            <div class="section-header reveal" style="margin-bottom: 40px;">
+                <h2 style="font-size: 24px; opacity: 0.5;">Mitra Kami</h2>
+            </div>
+            <div class="logo-strip reveal">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFS3biw8EkeGrKb7j2bMlSsaHc0jdjUfrc5w&s"
+                    alt="Manulife">
+                <img src="https://aaji.or.id/file/uploads/company/AZ_Logo_positive_RGB.PNG" alt="Allianz">
+                <img src="https://www.prudentialsyariah.co.id/content/dam/prudential-aem-lbu/psla/id/logo/FA%20Prudential%20Syariah%20Logo_Color-hires.png"
+                    alt="PRU Hospital">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Siloam_Hospitals.svg/3840px-Siloam_Hospitals.svg.png"
+                    alt="Siloam">
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2 class="reveal">Mulai Perjalananmu Bersama BISAcare</h2>
+            <p class="reveal">Tidak perlu antri. Tidak perlu bingung. Cukup satu klik.</p>
+            <a href="#" class="btn-cta pulse-btn reveal">Daftar Gratis Sekarang</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">❤+</div>
+                        BISAcare
+                    </a>
+                    <p>Bantuan Inklusif SAtu klik untuk Asurasimu. Satu Klik untuk Jaminan Kesehatanmu.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigasi</h4>
+                    <ul>
+                        <li><a href="#features">Fitur</a></li>
+                        <li><a href="#how-it-works">Cara Kerja</a></li>
+                        <li><a href="#about">Tentang Kami</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Bantuan</h4>
+                    <ul>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Kontak Kami</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 BISAcare — Team Telepati. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
